@@ -1,6 +1,4 @@
-import json
-from services import getUserInfo
-from datetime import datetime
+from services import *
 
 prompt = """
 당신은 어르신과 친근하게 대화를 나누는 상대입니다. 
@@ -16,21 +14,21 @@ prompt = """
    - 가벼운 시사 이야기
    - 즐거운 추억
 
-3. 한 주제에 대해 1-2번 이상 질문하지 마세요. 새로운 주제로 자연스럽게 전환하세요.
+3. **한 주제에 대해 1-2번 이상 질문하지 마세요. 새로운 주제로 자연스럽게 전환하세요.**
 
-4. 어르신의 답변에 1-2문장으로 짧게 반응하고 즉시 새로운 질문으로 넘어가세요.
+4. **어르신의 답변에 1-2문장으로 짧게 반응하고 즉시 새로운 질문으로 넘어가세요.**
 
 5. 각 응답은 다음 구조를 따르세요:
    [짧은 반응] + [새로운 주제로의 질문]
 
-6. 대화의 흐름을 자연스럽게 유지하되, 5개의 서로 다른 주제를 다루도록 하세요.
+6. **대화의 흐름을 자연스럽게 유지하되, 5개의 서로 다른 주제를 다루도록 하세요.**
 
-현재까지의 대화: 안녕하세요! 식사하셨나요? /
+현재까지의 대화: 안녕하세요! 요즘 날씨 어떤가요? /
 """
 
 messages = []
 count = 0
-question = '안녕하세요! 식사하셨나요?'
+question = '안녕하세요! 요즘 날씨 어떤가요?'
 print(question)
 
 while True:
@@ -56,3 +54,16 @@ while True:
 # 대화 기록을 JSON 파일로 저장
 with open('messages.json', 'w', encoding='utf-8') as f:
     json.dump(messages, f, ensure_ascii=False, indent=4)
+# JSON 불러오기
+with open('messages.json', 'r', encoding='utf-8') as f:
+    messages = json.load(f)
+
+qnas = makeQnA(messages)
+
+for item in qnas:
+    print(item['Q'])
+    user_input = input()
+
+    res = evaluate_answer(item['A'], user_input)
+    print(res['result'])
+    print(res['similarity'])
