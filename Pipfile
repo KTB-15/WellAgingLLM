@@ -8,6 +8,7 @@ transformers = "*"
 python-dotenv = "*"
 openai = "*"
 sentence-transformers = "*"
+fastapi = "*"
 
 [dev-packages]
 
