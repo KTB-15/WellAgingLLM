@@ -4,12 +4,12 @@ from services import *
 
 app = FastAPI()
 
-@app.post("/getuserinfo/")
+@app.post("/getuserinfo")
 async def getuserinfo(user_info: UserRequest):
     result = getUserInfo(user_info.prompt, user_info.user_input)
     return result
 
-@app.post("/makeqna/")
+@app.post("/makeqna")
 async def makeqna(chat_history: QuestionRequest):
     result = makeQnA(chat_history)
     return result

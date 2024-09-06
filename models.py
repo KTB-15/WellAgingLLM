@@ -8,7 +8,6 @@ class UserRequest(BaseModel):
 class ChatItem(BaseModel):
     Q: str
     A: str
-    T: str
 
 class QuestionRequest(BaseModel):
     chat_history: List[ChatItem]
