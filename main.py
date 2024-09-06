@@ -1,27 +1,15 @@
+import json
 from func import chat_with_gpt
-from datetime import datetime
-from getInfo import question
 
 
-def getUserInfo(prompt):
-    # 사용자에게 입력받기
-    user_input = input("You: ")
-
+def getUserInfo(prompt,user_input):
     # gpt 응답 및 prompt에 대화 내용 저장
     res = chat_with_gpt(prompt, user_input)
-    prompt += user_input
-    prompt += ' / '
-    prompt += res
-    prompt += ' / '
 
-    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-    result = {
-            "question": res,
-            "time": current_time
-        }
-
-    return prompt, result
+    return {
+        'statusCode':200,
+        'body':json.dumps({'messages':res})
+    }
 
 
 if __name__=="__main__":
@@ -35,8 +23,7 @@ if __name__=="__main__":
         현재까지의 대화: 안녕하세요! 식사하셨나요? / 
     """
 
-    prompt, res = getUserInfo(prompt)
-    print(prompt)
+    res = getUserInfo(prompt)
     print(res)
 
 
